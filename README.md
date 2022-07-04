@@ -13,7 +13,7 @@ Limitations
 
 
 
-Here are the commands to install everythin.If using python make sure you install it to the
+Here are the commands to install everything. Here is a quick guide on how to install the packages being used.
  
 pip install beautifulsoup4
 pip install selenium
