@@ -1,43 +1,29 @@
-# cvePackageChecker
-Create a list of packages, with version and cvePackageChecker will scrape the internet to look for known vulnerabilities in those packages.
-#OK HERE is the guide to working with this project. 
-# It runs in tandem with a class I made called vendorNode which is used to keep track of the vendors. 
+#Guide to using cvePackageScraper
+
+What is cveVulnerabilityScrapper?
+It is a python program that takes in a series of packages and versiosn, it then web scrapes cveVulnerabilities for any known vulnerabilities. So that you and your team can be up to date and update certain versions accordingly. Here is a link on how to get your companies used packages for projects.
+https://www.cyberciti.biz/faq/check-list-installed-packages-in-centos-linux/
+
+Make sure file being read is .ods
+
+Limitations
+  Many versions apply to packages before. Such as "prior to 3.1.0".  So cveVulnerabilityScrapper reads the version number in the any version category.  This leads to some problems where it will over pick certain versions that don't apply. These will appear in the * category
+  
+  If their are more than 50 vendors for a product and more than 50 vulnerabilities it will only read the first 50. I  have never seen this before just thought I would mention.
 
 
-# Here is what the program does. 
-# Given a list of packages, with the first collumn being named Package Name and the second being named 
-# Version it takes the version from eachone. It needs a version. 
-# Than it will look up the database CVEDETAILS to look for known vulnerabilities in the packages. 
 
+Here are the commands to install everythin.If using python make sure you install it to the
+ 
+pip install beautifulsoup4
+pip install selenium
+pip install pandas
+pip install odfpy
 
-# Here are the limitations currently you need to install panda a program to help panda read ods files, 
-# beutiful soup and selenuim. Selenuim is more complicated. 
-# Once those are installed and the file you want read is in the same directory, 
-# you might have to edit the file name reader string. 
-# Than you it will type in every version, if thier are more than 50 vendors for a product it will only look at the first 50. 
-# If their are more than 50 vulnerabilities per version than it will only look at the first 50. I have never seen this before.
+For selenium you also need to prepare firefox to be run by your computer
+You can use geckodriver for this. In order to install geckodriver you need cargo
 
-# !!!Secondly it reads the description to see what version the vulnerabilities is talking about. 
-# Many applly to a version and the versions before. The program is written to looks for these cases.
-# The program gets confused on which numbers are version numbers and just normal numbers. 
-# These will be in the * category of vulnerabilities, so read that category and look with your own eyes. 
-# Finally many products have multiple vendors and even as a human I could not tell which ones my company was using.
-# So instead the program looks through all of them.
+curl https://sh.rustup.rs -sSf | sh
+cargo install geckodriver
 
-
-#Here are the commands to install everythin.If using python make sure you install it to the
-# version you are using. Many operating systems pre install python, but not python 3
-# pip install beautifulsoup4
-# pip install selenium
-# pip install pandas
-# pip install odfpy
-#
-# For selenium you also need to prepare firefox to be run by your computer
-# You can use geckodriver for this. In order to install geckodriver you need cargo
-# curl https://sh.rustup.rs -sSf | sh
-#
-# Then install geckodriver with
-# cargo install geckodriver
-#
-# Final note, the version of firefox cannot be the same one that comes with snap
-#on ubuntu for all the linux users out their :)
+Final note, the version of firefox cannot be the same one that comes with snap on ubuntu for all the linux users out their :)
