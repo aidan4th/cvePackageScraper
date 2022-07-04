@@ -58,12 +58,15 @@ def purifyVerNum(ver):
     return ver
 def purifyText(text):
     consider = []
+    allVersionCase = False
     for t in text.split():
         consid = False
         if any(char.isdigit() for char in t):
-            consid = True
+            consid, allVersionCase = True, True
         if (consid == True):
             consider.append(purifyVerNum(t))
+    if allVersionCase == False:
+        return True
     return consider
 
 def purifyTest(ver, text):
@@ -71,27 +74,32 @@ def purifyTest(ver, text):
     text = str(text)
     ver = purifyVerNum(ver)
     consider = []
-    consider = purifyText(text)
-    for con in consider:
-        try:
-            v = float(ver)
-            c = float(con)
-            if (v > c):
-                i = 0
-                while v/10 > 1:
-                    v = v/10
-                    i += 1
-                while c/10 > 1:
-                    c = c/10
-                    i -= 1
-                if (i > 0):
-                    v = float(ver)
-                    c = float(con)
-                    c = (c - (c % 1))*(10**i)+(c % 1)
-                    if (c >= v):
-                        return True
-        except ValueError:
-            #print("purifyTest: Could not convert '" + con +  "' into a float" )    
-            #This will be called a lot
-            None
-    return False
+    try:
+        consider = purifyText(text)
+        for con in consider:
+            try:
+                v = float(ver)
+                c = float(con)
+                if (v > c):
+                    i = 0
+                    while v/10 > 1:
+                        v = v/10
+                        i += 1
+                    while c/10 > 1:
+                        c = c/10
+                        i -= 1
+                    if (i > 0):
+                        v = float(ver)
+                        c = float(con)
+                        c = (c - (c % 1))*(10**i)+(c % 1)
+                        if (c >= v):
+                            return True
+            except ValueError:
+                #print("purifyTest: Could not convert '" + con +  "' into a float" )    
+                #This will be called a lot
+                None
+        return False
+    except TypeError:
+        ##This should return true when the boolean is passed
+        return True
+    
